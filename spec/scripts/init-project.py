@@ -74,16 +74,6 @@ def main():
     for filename, package_path in contracts.items():
         text = (template / 'scripts/templates' / filename).read_text()
         planned[contract_root / package_path / filename] = text.replace('template.base', args.base_package).encode()
-    # Local JDK installation paths must not leak into a reusable project copy.
-    for dest, content in list(planned.items()):
-        if dest.suffix == '.md':
-            text = content.decode()
-            text = re.sub(r'^本机 JDK 8：.*\n', '', text, flags=re.M)
-            text = re.sub(r'^本机路径位于.*\n', '', text, flags=re.M)
-            text = re.sub(r'export JAVA_HOME="/Users/natasha/[^"\n]+"',
-                          'export JAVA_HOME="/path/to/project-jdk"', text)
-            text = text.replace('/Users/natasha/data/code/规范/', './')
-            planned[dest] = text.encode()
     conflicts = [str(path.relative_to(target)) for path in planned if path.exists()]
     # Other inline hooks could duplicate this template; leave merging to the owner.
     if (target / '.codex/config.toml').exists():

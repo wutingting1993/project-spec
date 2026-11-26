@@ -28,7 +28,9 @@ class InitTest(unittest.TestCase):
             self.assertTrue((target / 'backend/src/main/java/com/example/adapter/web/advice/GlobalExceptionHandler.java').is_file())
             self.assertIn('UNKNOWN_ERROR(99999', (target / 'backend/src/main/java/com/example/infrastructure/common/ResponseEnum.java').read_text())
             self.assertIn('.tool-cache/', (target / '.gitignore').read_text())
-            self.assertNotIn('/Users/natasha/', (target / 'docs/standards/backend.md').read_text())
+            backend_doc = 'docs/standards/backend.md'
+            self.assertEqual((target / backend_doc).read_bytes(),
+                             (SCRIPT.parents[1] / backend_doc).read_bytes())
             second = subprocess.run(command, capture_output=True, text=True)
             self.assertNotEqual(second.returncode, 0)
 
