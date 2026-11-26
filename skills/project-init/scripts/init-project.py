@@ -24,7 +24,7 @@ def main():
                 'throw', 'throws', 'transient', 'try', 'void', 'volatile', 'while', 'true', 'false', 'null', '_'}
     if keywords.intersection(args.base_package.split('.')):
         parser.error('Java package cannot contain keywords')
-    template = Path(__file__).resolve().parents[1]
+    template = Path(__file__).resolve().parents[3] / 'spec'
     target = args.target.expanduser().resolve()
     if target == template or template in target.parents:
         parser.error('Target must be outside the template directory')

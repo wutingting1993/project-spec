@@ -50,4 +50,4 @@ bash scripts/backend-gate.sh backend/
 
 自动触发接入：[Codex Hook 配置](HOOKS.md)。模板不自动安装到其他项目，也不自动授予 hook 信任。
 
-新项目初始化：[命令及生成结构](INIT.md)。通用返回、错误码和业务异常直接维护 scripts/templates/ 下的 Java 文件，初始化复制时替换包名。
+通用返回、错误码和业务异常直接维护 scripts/templates/ 下的 Java 文件，初始化复制时替换包名。

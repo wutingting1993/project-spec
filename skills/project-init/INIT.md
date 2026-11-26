@@ -40,15 +40,15 @@
 
 ### 3.1 运行规范初始化脚本
 
-在本文所在目录定位 [init-project.sh](init-project.sh)，使用其绝对路径执行；路径含空格时加引号。
+在本技能目录下定位 [init-project.sh](scripts/init-project.sh)，使用其绝对路径执行；路径含空格时加引号。
 
 ```bash
 # 单模块：project-dir 默认为 .，source-root 默认为 src/main/java
-bash /path/to/规范/scripts/init-project.sh /path/to/project \
+bash /path/to/project-spec/skills/project-init/scripts/init-project.sh /path/to/project \
   --base-package com.example.orders
 
 # 后端位于 backend，源码路径相对 backend
-bash /path/to/规范/scripts/init-project.sh /path/to/project \
+bash /path/to/project-spec/skills/project-init/scripts/init-project.sh /path/to/project \
   --base-package com.example.orders \
   --project-dir backend --source-root src/main/java
 ```
@@ -63,11 +63,11 @@ bash /path/to/规范/scripts/init-project.sh /path/to/project \
 
 | 模板 | 目标包 |
 |---|---|
-| [GlobalExceptionHandler.java](templates/GlobalExceptionHandler.java) | 基础包.adapter.web.advice |
-| [BusinessException.java](templates/BusinessException.java) | 基础包.infrastructure.common.exception |
-| [ResponseEnum.java](templates/ResponseEnum.java) | 基础包.infrastructure.common |
-| [Result.java](templates/Result.java) | 基础包.application.api.dto |
-| [CUuid.java](templates/CUuid.java)、[HexEncoding.java](templates/HexEncoding.java) | 基础包.infrastructure.common.util |
+| [GlobalExceptionHandler.java](../../spec/scripts/templates/GlobalExceptionHandler.java) | 基础包.adapter.web.advice |
+| [BusinessException.java](../../spec/scripts/templates/BusinessException.java) | 基础包.infrastructure.common.exception |
+| [ResponseEnum.java](../../spec/scripts/templates/ResponseEnum.java) | 基础包.infrastructure.common |
+| [Result.java](../../spec/scripts/templates/Result.java) | 基础包.application.api.dto |
+| [CUuid.java](../../spec/scripts/templates/CUuid.java)、[HexEncoding.java](../../spec/scripts/templates/HexEncoding.java) | 基础包.infrastructure.common.util |
 
 已有目标文件时脚本整批停止。检查冲突后保留已有有效内容，手工合并本任务需要的规范或工具配置；合并后直接执行后续验证，禁止删除已有文件以强行重跑。
 
@@ -80,7 +80,7 @@ bash /path/to/规范/scripts/init-project.sh /path/to/project \
 - 配置 Lombok 注解处理及 Web、Validation、Jackson、SLF4J 等必要依赖；版本服从项目依赖管理。
 - 默认异常模板适用于 Spring MVC 5.3、javax.validation。Spring Boot 3+ 切换 jakarta.validation 并适配异常 API；WebFlux 项目需改用对应异常及处理机制，不能直接套用 MVC 模板。
 - JDK 按目标项目要求选择，本机路径只作环境记录，其他机器不强制版本。当前质量工具已验证 Java 8；新 Java 语法需选用兼容的工具版本并重新验证。
-- 确认启动包扫描覆盖生成代码；调整 .codex/quality.json 的 project_dir、source_roots，并按 [HOOKS.md](HOOKS.md) 配置 hook。
+- 确认启动包扫描覆盖生成代码；调整 .codex/quality.json 的 project_dir、source_roots，并按 [HOOKS.md](../../spec/scripts/HOOKS.md) 配置 hook。
 - Maven 项目使用现有 gate；Gradle 项目适配编译和 gate 命令。Git/CI 仅在用户授权范围内配置。
 
 通用约定：HTTP 200；code 为 int，成功 200，异常从 10000 开始，未知异常 99999；包装业务异常保留原 cause；写入需要生成 ID 时使用 CUuid.nextId()。MVC 路由错误及过滤器错误须按项目配置接入，不能因存在全局处理器就宣称全部覆盖。
@@ -101,7 +101,7 @@ bash scripts/backend-gate.sh path/to/source/
 
 脚本路径相对于规范安装目录，源码参数相对于实际执行目录；Maven gate 在业务 POM 所在目录运行。多模块包含实际源码和全部关联模块编译产物。Gradle 项目使用已适配的构建入口。
 
-3. 按 [HOOKS.md](HOOKS.md) 验证 PostToolUse 和 Stop，检查日志、退出结果及 JSON 决策，确认实际执行了质量检查、格式检查、编译和架构检查。首次接入应清除目标项目的旧 hook 凭证后验证；模板不携带缓存。
+3. 按 [HOOKS.md](../../spec/scripts/HOOKS.md) 验证 PostToolUse 和 Stop，检查日志、退出结果及 JSON 决策，确认实际执行了质量检查、格式检查、编译和架构检查。首次接入应清除目标项目的旧 hook 凭证后验证；模板不携带缓存。
 4. 在 Codex 中审查信任 hook 后，确认真实事件能够触发。手动运行只证明脚本可执行，不代表 Codex 自动触发已生效；尚未信任时标记为待用户操作，禁止自动授信。
 5. 使用项目实际命令和环境配置启动服务，等待启动完成，确认进程、监听端口及启动日志；请求已有的健康接口或可验证接口，检查预期响应。没有健康接口时使用实际可用接口，不因验证擅自增加接口。
 
