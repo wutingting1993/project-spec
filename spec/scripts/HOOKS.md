@@ -39,4 +39,4 @@ Stop 失败使用 JSON `decision: block` 反馈；JSON 正确输出时进程可�
 
 官方说明：[Codex Hooks](https://learn.chatgpt.com/docs/hooks)。
 
-初始化验收：后端须先实际运行完整 gate，再验证 PostToolUse、Stop 和 Codex 中的真实触发状态；手动验证时确认没有复用旧凭证。完整门禁不负责启动服务，后端与前端须另外按 INIT.md 完成启动及接口/页面验证。
+初始化验收：后端须先实际运行完整 gate，再验证 PostToolUse、Stop 和 Codex 中的真实触发状态；手动验证时确认没有复用旧凭证。完整门禁不负责启动服务，后端与前端须另行启动并验证接口或页面。

@@ -97,7 +97,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 
 ## 完成交付前检查（强制）
 
-项目初始化还必须按 [INIT.md](scripts/INIT.md) 启动适用的前后端服务，验证后端质量门禁及 hook 实际执行；缺少环境或 hook 尚未信任时明确报告未完成事项。
+项目初始化还必须启动适用的前后端服务，验证后端质量门禁及 hook 实际执行；缺少环境或 hook 尚未信任时明确报告未完成事项。
 
 
 项目已启用并信任 hook 时自动检查，接入见 [HOOKS.md](scripts/HOOKS.md)；未启用时仍须手动执行，不能因存在配置文件就视为已检查。

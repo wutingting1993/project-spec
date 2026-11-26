@@ -30,7 +30,7 @@ class InitTest(unittest.TestCase):
             self.assertIn('.tool-cache/', (target / '.gitignore').read_text())
             backend_doc = 'docs/standards/backend.md'
             self.assertEqual((target / backend_doc).read_bytes(),
-                             (SCRIPT.parents[1] / backend_doc).read_bytes())
+                             (SCRIPT.parents[3] / 'spec' / backend_doc).read_bytes())
             second = subprocess.run(command, capture_output=True, text=True)
             self.assertNotEqual(second.returncode, 0)
 
