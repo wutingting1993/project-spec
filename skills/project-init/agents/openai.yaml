@@ -1,0 +1,4 @@
+interface:
+  display_name: "项目初始化"
+  short_description: "按通用规范收集项目配置，创建四层架构与通用类并接入质量检查"
+  default_prompt: "使用 $project-init 帮我初始化项目，先询问目标目录及其他缺失配置。"
